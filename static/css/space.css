@@ -1,0 +1,49 @@
+.buffer
+{
+	position: relative;
+	margin: 10px;
+	margin-left: 20px;
+	margin-right: 20px;
+	padding: 4px;
+	height: calc(100% - 150px);
+	background-color: #162228;
+}
+
+.bufferHeader
+{
+	background-color: #364248;
+	margin-bottom: 2px;
+}
+
+.bufferHeaderText
+{
+	margin: 0px;
+	margin-left: 4px;
+	color: #bbb;
+}
+
+.CodeMirror
+{
+	position: absolute;
+	width: calc(100% - 8px);
+	height: calc(100% - 34px);
+}
+
+.btn
+{
+	display: inline-block;
+	margin: 10px;
+}
+
+.controlButtons
+{
+	margin-left: 10px;
+}
+
+#python-output
+{
+	border: 0;
+	resize: none;
+	outline: none;
+	height: 100px;
+}

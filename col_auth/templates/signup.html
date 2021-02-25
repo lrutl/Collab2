@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Sign Up | Col(lab)2
+{% endblock %}
+
+{% block contentCSS %}
+{{ block.super }}
+  <link type="text/css" rel="stylesheet" href="/static/css/login.css" media="screen,projection"/>
+{% endblock %}
+
+{% block navContent %}
+		<li><a href="/" style="color:white">Home</a></li>
+		<li><a href="/login/" style="color:white">Log In</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="centerChild">
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="card z-depth-1">
+				<div class="card-content">
+					<h1>Signup</h1>
+					<form action="/signup/" method="post">
+						<input type="text" name="email" placeholder="Email" value="{{ email_field }}" required>
+						<input type="password" name="password" placeholder="Password" value="{{ password_field }}" required>
+						<input type="password" name="password_conf" placeholder="Confirm Password" value="{{ confirm_password }}" required>
+						{% if error_text %}
+							<div id="error-text">{{ error_text }}</div>
+						{% endif %}
+						<button class="btn btn-width btn-caro-primary section-btn">Sign Up</button>
+
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

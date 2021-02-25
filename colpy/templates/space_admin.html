@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Admin | Col(lab)2
+{% endblock %}
+
+{% block contentCSS %}
+<link type="text/css" rel="stylesheet" href="{% static 'vendor/codemirror/lib/codemirror.css' %}" media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="{% static 'vendor/codemirror/theme/material.css' %}" media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="{% static 'vendor/codemirror/addon/scroll/simplescrollbars.css' %}" media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/space.css' %}" media="screen,projection"/>
+{% endblock %}
+
+{% block headerJS %}
+<script src="{% static 'vendor/codemirror/lib/codemirror.js' %}"></script>
+<script src="{% static 'vendor/codemirror/mode/python/python.js' %}"></script>
+<script src="{% static 'vendor/codemirror/addon/scroll/simplescrollbars.js' %}"></script>
+{% endblock %}
+
+{% block navContent %}
+<li>
+	<form action="/delete_space/" method="post">
+		<input type="hidden" name="space_url" value="{{ space_url }}" required>
+		{% if error_text %}
+			<div id="error-text">{{ error_text }}</div>
+		{% endif %}
+		<button class="btn waves-effect waves-light">Delete Lobby</button>
+		{% csrf_token %}
+	</form>
+</li>
+{% if request.user.is_authenticated %}
+	<li><a href="/logout/">Log Out</a></li>
+{% else %}
+  <li><a href="/login/">Log In</a></li>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="modal" class="modal">
+	<div class="modal-content">
+		<h4 id="modal-title">Runtime Output</h4>
+		<textarea id="python-output" readonly></textarea>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="model-open modal-close waves-effect waves-black btn-flat">Done</a>
+	</div>
+</div>
+
+<div class="buffer" id="buffer">
+	<div class="bufferHeader"><p class="bufferHeaderText">{{ space_url }}</p></div>
+	<form>
+		<textarea id="codepython" name="codepython">{{ space_code }}</textarea>
+	</form>
+</div>
+
+<div class="controlButtons">
+	<button id="run-btn" class="btn waves-effect waves-light" type="submit" name="action">Run
+	  <i class="material-icons right">send</i>
+	</button>
+	<button id="push-btn" class="btn waves-effect waves-light" type="submit" name="action">Push
+	  <i class="material-icons right">cloud</i>
+	</button>
+	<button id="check-btn" class="btn waves-effect waves-light" type="submit" name="action">Check
+	  <i class="material-icons right">check_box</i>
+	</button>
+</div>
+{% endblock %}
+
+{% block contentJS %}
+<script>
+const editor = CodeMirror.fromTextArea(document.getElementById("codepython"), {
+	mode: "python",
+	theme: "material",
+	scrollbarStyle: "overlay",
+	lineNumbers: true,
+	lineWrapping: false
+})
+const space_url = '{{ space_url }}';
+</script>
+
+<script type="text/javascript" src="/static/js/modal.js"></script>
+<script type="text/javascript" src="/static/colpy/javascript/space_host.js"></script>
+
+{% endblock %}
